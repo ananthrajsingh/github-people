@@ -1,4 +1,4 @@
-package com.ananth.githubpeople.ui.main
+package com.ananth.githubpeople.ui.search
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle

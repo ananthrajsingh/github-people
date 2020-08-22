@@ -82,6 +82,14 @@ class SearchViewModel(
     }
 
 
+    /**
+     * Cancel all coroutines when the ViewModel is cleared.
+     */
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
     companion object {
         val TAG = SearchViewModel::class.java.simpleName
     }

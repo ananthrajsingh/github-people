@@ -1,9 +1,9 @@
 package com.ananth.githubpeople.ui.search
 
+import android.app.Application
+import android.text.TextUtils
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.ananth.githubpeople.data.model.User
 import com.ananth.githubpeople.data.network.ApiStatus
 import com.ananth.githubpeople.data.network.GithubApi
@@ -11,8 +11,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.lang.Exception
+import java.util.*
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel(
+    app: Application
+) : AndroidViewModel(app) {
 
     // This will hold the data to be shown in the list
     private val _usersList = MutableLiveData<List<User?>>()
@@ -24,6 +28,12 @@ class SearchViewModel : ViewModel() {
     val status: LiveData<ApiStatus>
         get() = _status
 
+    // Checks if previous query wasn't same are current, therefore avoiding new call
+    private val _query = MutableLiveData<String>()
+    val query: LiveData<String>
+        get() = _query
+
+
     // The Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
@@ -31,22 +41,62 @@ class SearchViewModel : ViewModel() {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     init {
-        getSearchResults("ananth")
+
     }
 
-    fun getSearchResults(searchQuery: String) {
+    /**
+     * Talks to the Github's API using [GithubApi] and fetches the results for the
+     * passed [query].
+     * Sets the [status] and [usersList] which the UI is is listening to, using two way binding.
+     */
+    private fun getSearchResults(searchQuery: String) {
         coroutineScope.launch {
-            _status.value = ApiStatus.LOADING
-            val result = GithubApi.retrofitService.getSearchResults(query = searchQuery)
-            _usersList.value = result.items
-
-            for (user in usersList.value!!) {
-                Log.d(TAG, "User ${user?.id}")
+            try {
+                _status.value = ApiStatus.LOADING
+                val result = GithubApi.retrofitService.getSearchResults(query = searchQuery)
+                _usersList.value = result.items
+                _status.value = ApiStatus.SUCCESS
+                Log.d(TAG, "Number of response: ${result.items?.size}")
+            } catch (e: Exception) {
+                _status.value = ApiStatus.ERROR
+                Log.e(TAG, "Error fetching results for query: $query", e)
             }
         }
     }
 
+    /**
+     * Checks [originalInput], tries to refresh the list with the results for [originalInput].
+     * Avoids refresh if current and previous query are same.
+     */
+    fun setQuery(originalInput: String) {
+        if (TextUtils.isEmpty(originalInput)) {
+            _query.value = originalInput
+            return
+        }
+        val input = originalInput.toLowerCase(Locale.getDefault()).trim()
+        if (input == _query.value) {
+            return
+        }
+        _query.value = input
+        getSearchResults(input)
+    }
+
+
     companion object {
         val TAG = SearchViewModel::class.java.simpleName
+    }
+
+    /**
+     * Factory for constructing [SearchViewModel] with parameter
+     */
+    class Factory(private val app: Application) :
+        ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return SearchViewModel(app) as T
+            }
+            throw IllegalArgumentException("Unable to construct viewmodel")
+        }
     }
 }

@@ -5,10 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout">
 
+    <data>
+        <variable
+            name="user"
+            type="com.ananth.githubpeople.data.model.User" />
+        <variable
+            name="clickListener"
+            type="com.ananth.githubpeople.ui.search.ItemClickListener" />
+    </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="80dp"
         app:cardCornerRadius="4dp"
         android:layout_marginEnd="@dimen/spacing_normal"
         app:cardElevation="4dp"
@@ -21,11 +29,12 @@
 
             <ImageView
                 android:id="@+id/item_avatar"
-                android:layout_width="110dp"
+                android:layout_width="80dp"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:image_url="@{user.avatarUrl}"
                 android:scaleType="centerCrop"
                 tools:src="@mipmap/ic_launcher" />
 
@@ -33,34 +42,36 @@
                 android:id="@+id/item_username"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_small"
-                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/spacing_normal"
                 android:layout_marginEnd="@dimen/spacing_small"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{user.login}"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/item_avatar"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="jakewharton" />
 
-            <TextView
-                android:id="@+id/item_description"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/spacing_small"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:layout_marginBottom="@dimen/spacing_small"
-                android:maxLines="2"
-                android:ellipsize="end"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/item_avatar"
-                app:layout_constraintTop_toBottomOf="@+id/item_username"
-                tools:text="This is a random description that should be saying something about the Jake Wharton" />
+<!--            <TextView-->
+<!--                android:id="@+id/item_description"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_marginStart="@dimen/spacing_small"-->
+<!--                android:layout_marginEnd="@dimen/spacing_small"-->
+<!--                android:layout_marginTop="@dimen/spacing_small"-->
+<!--                android:layout_marginBottom="@dimen/spacing_small"-->
+<!--                android:maxLines="2"-->
+<!--                android:ellipsize="end"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/item_avatar"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/item_username"-->
+<!--                android:text="@{user.}"-->
+<!--                tools:text="This is a random description that should be saying something about the Jake Wharton" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

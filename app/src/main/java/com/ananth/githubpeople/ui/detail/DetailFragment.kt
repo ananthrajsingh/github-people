@@ -31,9 +31,8 @@ class DetailFragment : Fragment() {
         val TAG = DetailFragment::class.java.simpleName
     }
 
-    private val viewModel: DetailViewModel by viewModels {
-        DetailViewModel.Factory(requireActivity().application)
-    }
+    private val viewModel: DetailViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,7 +41,6 @@ class DetailFragment : Fragment() {
 
         val user = DetailFragmentArgs.fromBundle(requireArguments()).selectedUser
         this.user = user
-        viewModel.getRepositories(user)
         return binding.root
     }
 

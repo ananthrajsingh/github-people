@@ -4,6 +4,9 @@ import android.os.Parcelable
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * The model to hold the response sent by Github API from search endpoint
+ */
 @Parcelize
 data class SearchResponse(
 

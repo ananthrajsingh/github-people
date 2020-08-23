@@ -6,6 +6,8 @@
     <data>
         <import type="com.ananth.githubpeople.data.network.ApiStatus" />
 
+        <import type="android.text.TextUtils" />
+
         <variable
             name="viewModel"
             type="com.ananth.githubpeople.ui.search.SearchViewModel" />
@@ -53,6 +55,61 @@
         </androidx.cardview.widget.CardView>
 
 
+        <TextView
+            android:id="@+id/no_results_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/empty_search_result(viewModel.query)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visible_if_true="@{viewModel.status == ApiStatus.SUCCESS &amp;&amp; viewModel.usersList.size == 0 &amp;&amp; viewModel.query != null}"
+            tools:layout_editor_absoluteY="247dp" />
+
+        <TextView
+            android:id="@+id/try_search_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/try_search"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3"
+            app:visible_if_true="@{viewModel.status != ApiStatus.ERROR &amp;&amp; viewModel.usersList.size == 0 &amp;&amp; TextUtils.isEmpty(viewModel.query)}" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_normal"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/spacing_normal"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+            app:visible_if_true="@{viewModel.status == ApiStatus.ERROR &amp;&amp; !TextUtils.isEmpty(viewModel.query)}">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_bad_network" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:text="@string/error_message"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+        </LinearLayout>
         <ProgressBar
             android:id="@+id/loading_bar"
             style="?android:attr/progressBarStyleHorizontal"
@@ -69,8 +126,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:paddingBottom="@dimen/spacing_small"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"

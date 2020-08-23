@@ -10,7 +10,7 @@ import com.ananth.githubpeople.data.model.Repository
 import com.ananth.githubpeople.databinding.RepoItemBinding
 
 /**
- * Adapter to provide a data to views that are displayed by [RecyclerView]
+ * Adapter to provide a [Repository] to views that are displayed by [RecyclerView]
  */
 class RepoListAdapter (private val clickListener: RepoClickListener):
     ListAdapter<Repository, RepoListAdapter.RepoListViewHolder>(DifferenceCallback) {

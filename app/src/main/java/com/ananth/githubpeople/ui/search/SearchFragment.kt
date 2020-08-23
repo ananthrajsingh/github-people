@@ -29,9 +29,7 @@ class SearchFragment : Fragment() {
         val TAG = SearchFragment::class.java.simpleName
     }
 
-    private val viewModel: SearchViewModel by viewModels {
-        SearchViewModel.Factory(requireActivity().application)
-    }
+    private val viewModel: SearchViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -85,5 +83,4 @@ class SearchFragment : Fragment() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(windowToken, 0)
     }
-
 }

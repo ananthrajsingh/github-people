@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.ananth.githubpeople.R
 import com.ananth.githubpeople.databinding.SearchFragmentBinding
 import com.ananth.githubpeople.util.autoCleared
@@ -43,7 +44,8 @@ class SearchFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         adapter = SearchResultAdapter(ItemClickListener {
-            // TODO Navigate to the Details Fragment
+            this.findNavController().navigate(SearchFragmentDirections
+                .actionSearchFragmentToDetailFragment(it))
         })
         binding.searchList.adapter = adapter
         initSearchInputListener()

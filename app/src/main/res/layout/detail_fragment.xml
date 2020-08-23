@@ -10,66 +10,71 @@
         <variable
             name="viewModel"
             type="com.ananth.githubpeople.ui.detail.DetailViewModel" />
+
+        <variable
+            name="user"
+            type="com.ananth.githubpeople.data.model.User" />
     </data>
 
-
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:image_url="@{viewModel.user.avatarUrl}"
-        android:layout_marginTop="@dimen/spacing_normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/ic_launcher_round" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@{viewModel.user.login}"
-        android:layout_marginStart="@dimen/spacing_normal"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:layout_marginEnd="@dimen/spacing_normal"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        tools:text="ananthrajsingh" />
-
-    <ProgressBar
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:visible_if_true="@{viewModel.status == ApiStatus.LOADING}"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/search_list"
-        app:layout_constraintStart_toStartOf="@+id/search_list"
-        app:layout_constraintTop_toTopOf="@+id/search_list" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_list"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/detail"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_marginTop="@dimen/spacing_large"
-        android:paddingBottom="@dimen/spacing_small"
-        app:list_data="@{viewModel.repoList}"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:visible_if_true="@{viewModel.status == ApiStatus.SUCCESS || viewModel.status == ApiStatus.LOADING}"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:listitem="@layout/repo_item" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        tools:context=".ui.detail.DetailFragment">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="@dimen/spacing_normal"
+            app:image_url="@{user.avatarUrl}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/ic_launcher_round" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:text="@{user.login}"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            tools:text="ananthrajsingh" />
+
+        <ProgressBar
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/repo_list"
+            app:layout_constraintStart_toStartOf="@+id/repo_list"
+            app:layout_constraintTop_toTopOf="@+id/repo_list"
+            app:visible_if_true="@{viewModel.status == ApiStatus.LOADING}"
+             />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/repo_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingBottom="@dimen/spacing_small"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:repo_list_data="@{viewModel.repoList}"
+            app:visible_if_true="@{viewModel.status == ApiStatus.SUCCESS}"
+            tools:listitem="@layout/repo_item" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

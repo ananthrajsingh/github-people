@@ -34,7 +34,7 @@ interface GithubApiService {
     /**
      * Suspend function that gets all the users for the passed query
      */
-    @GET("search/users")
+    @GET(Constant.SEARCH_USERS_ENDPOINT)
     suspend fun getSearchResults(
         @Query("q") query: String
     ): SearchResponse
@@ -42,15 +42,15 @@ interface GithubApiService {
     /**
      * Suspend function to give all repository of a particular user, identified by [username]
      */
-    @GET("users/{username}/repos")
+    @GET(Constant.USERS_REPO_ENDPOINT_WITH_USERNAME_ARGUMENT)
     suspend fun getRepositories(
-        @Path(value = "username") username: String
+        @Path(value = Constant.USERNAME_KEY) username: String
     ): List<Repository?>?
 
 }
 
 /**
- * Public Api object that exposes the lazy-initialized Retrofit service.
+ * Api object that exposes the lazy-initialized Retrofit service.
  */
 object GithubApi {
     val retrofitService: GithubApiService by lazy { retrofit.create(GithubApiService::class.java) }

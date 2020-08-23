@@ -4,7 +4,10 @@ import android.os.Parcelable
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
-
+/**
+ * Model class to hold the user information sent inside the response from Github API's search
+ * endpoint
+ */
 @Parcelize
 data class User(
 

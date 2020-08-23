@@ -4,6 +4,9 @@ import android.os.Parcelable
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * Model class to hold the repositories received from API call
+ */
 @Parcelize
 data class Repository(
 
@@ -14,7 +17,7 @@ data class Repository(
 	val id: Int? = null,
 
 	@Json(name="forks")
-	val forks: Int? = null,
+	val forks: Int,
 
 	@Json(name="full_name")
 	val fullName: String? = null,
@@ -40,7 +43,7 @@ data class Repository(
 	@Json(name="downloads_url")
 	val downloadsUrl: String? = null,
 
-	@Json(name="url")
+	@Json(name="html_url")
 	val url: String? = null,
 
 	@Json(name="open_issues")

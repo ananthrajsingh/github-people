@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">Github People</string>
-    <string name="search_hint">Search People</string>
+    <string name="app_name">Github Users</string>
+    <string name="search_hint">Search Github Users</string>
+    <string name="error_message">Something is not right</string>
+    <string name="empty_search_result">No results found for <b>%s</b></string>
+    <string name="try_search">Try searching for some awesome creators on Github</string>
 </resources>

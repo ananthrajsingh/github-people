@@ -16,10 +16,11 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         app:cardCornerRadius="4dp"
         android:layout_marginEnd="@dimen/spacing_normal"
-        app:cardElevation="4dp"
+        app:cardElevation="1dp"
+        android:onClick="@{() -> clickListener.onClick(repository)}"
         android:layout_marginStart="@dimen/spacing_normal"
         android:layout_marginBottom="@dimen/spacing_small"
         android:layout_marginTop="@dimen/spacing_small">
@@ -78,7 +79,7 @@
                 android:layout_marginEnd="@dimen/spacing_normal"
                 app:layout_constraintBottom_toBottomOf="@+id/item_username"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="34"
+                android:text="@{String.valueOf(repository.forks)}"
                 app:layout_constraintTop_toTopOf="@+id/item_username"
                 tools:text="324" />
 

@@ -14,9 +14,7 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import java.util.*
 
-class SearchViewModel(
-    app: Application
-) : AndroidViewModel(app) {
+class SearchViewModel : ViewModel() {
 
     // This will hold the data to be shown in the list
     private val _usersList = MutableLiveData<List<User?>>()
@@ -94,17 +92,4 @@ class SearchViewModel(
         val TAG = SearchViewModel::class.java.simpleName
     }
 
-    /**
-     * Factory for constructing [SearchViewModel] with parameter
-     */
-    class Factory(private val app: Application) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return SearchViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
 }

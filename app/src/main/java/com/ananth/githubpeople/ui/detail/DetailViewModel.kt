@@ -7,17 +7,15 @@ import com.ananth.githubpeople.data.model.Repository
 import com.ananth.githubpeople.data.model.User
 import com.ananth.githubpeople.data.network.ApiStatus
 import com.ananth.githubpeople.data.network.GithubApi
-import com.ananth.githubpeople.ui.search.SearchViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class DetailViewModel(app: Application) : AndroidViewModel(app) {
+class DetailViewModel : ViewModel() {
 
-
-    // This will hold the data to be shown in the list
+    // This will hold the data to be shown in the recycler view
     private val _repoList = MutableLiveData<List<Repository?>>()
     val repoList: LiveData<List<Repository?>>
         get() = _repoList
@@ -34,6 +32,11 @@ class DetailViewModel(app: Application) : AndroidViewModel(app) {
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
 
+    /**
+     * Talks to the Github's API using [GithubApi] and fetches the [Repository] list for the
+     * passed [User].
+     * Sets the [status] and [repoList] which the UI is is listening to, using two way binding.
+     */
     fun getRepositories(user: User) {
         coroutineScope.launch {
             try {
@@ -44,10 +47,11 @@ class DetailViewModel(app: Application) : AndroidViewModel(app) {
                 Log.d(TAG, "Number of response: ${result?.size}")
             } catch (e: Exception) {
                 _status.value = ApiStatus.ERROR
-                Log.e(TAG, "Error fetching results for query: ${user.login!!}", e)
+                Log.e(TAG, "Error fetching results for user: ${user.login!!}", e)
             }
         }
     }
+
     /**
      * Cancel all coroutines when the ViewModel is cleared.
      */
@@ -58,19 +62,5 @@ class DetailViewModel(app: Application) : AndroidViewModel(app) {
 
     companion object {
         val TAG = DetailViewModel::class.java.simpleName
-    }
-
-    /**
-     * Factory for constructing [DetailViewModel] with parameter
-     */
-    class Factory(private val app: Application) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return DetailViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
     }
 }

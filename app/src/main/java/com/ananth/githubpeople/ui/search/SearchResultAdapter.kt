@@ -11,8 +11,7 @@ import com.ananth.githubpeople.databinding.SearchItemBinding
 /**
  * Adapter to provide a data to views that are displayed by [RecyclerView]
  */
-class SearchResultAdapter (private val clickListener: ItemClickListener): ListAdapter<User,
-        SearchResultAdapter.SearchResultViewHolder>(DifferenceCallback) {
+class SearchResultAdapter (private val clickListener: ItemClickListener): ListAdapter<User, SearchResultAdapter.SearchResultViewHolder>(DifferenceCallback) {
 
     companion object DifferenceCallback: DiffUtil.ItemCallback<User>() {
         override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {

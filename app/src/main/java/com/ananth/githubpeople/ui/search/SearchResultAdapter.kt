@@ -17,7 +17,6 @@ class SearchResultAdapter (private val clickListener: ItemClickListener): ListAd
         override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
             return oldItem === newItem
         }
-
         override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
             return oldItem == newItem
         }
